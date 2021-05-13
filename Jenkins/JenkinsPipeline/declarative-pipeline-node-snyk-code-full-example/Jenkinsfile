@@ -3,7 +3,7 @@ pipeline {
 
     // Install the Jenkins tools you need for your project / environment
     tools {
-        maven 'maven-3.6.0' // Refers to a global tool configuration for Maven called 'maven-3.6.0'
+        nodejs 'node' // Refers to a global tool configuration for NodeJS called 'node'
     }
 
     // Pull your Snyk token from a Jenkins encrypted credential
@@ -28,15 +28,14 @@ pipeline {
 
         stage('Git Clone') {
             steps {
-                git url: 'https://github.com/jeff-snyk-demo/testproject-java-maven.git'
+                git url: 'https://github.com/iainrose/juice-shop.git'
                 sh 'ls -la'
             }
         }
 
         stage('Test Build Requirements') {
             steps {
-                sh 'java -version'
-                sh 'mvn -v'
+                sh 'node -version'
             }
         }
 
@@ -60,7 +59,7 @@ pipeline {
 
         stage('Build') {
             steps {
-              sh 'mvn package'
+              sh 'npm install'
             }
         }
 
@@ -72,13 +71,13 @@ pipeline {
             }
         }
 
-        // Capture the dependency tree for ongoing monitoring in Snyk.
-        // This is typically done after deployment to some environment (ex staging, test, production, etc).
-        stage('Snyk Monitor using Snyk CLI') {
-            steps {
-                // Use your own Snyk Organization with --org=<your-org>
-                sh './snyk monitor --org=demo-applications'
-            }
-        }
+        // // Capture the dependency tree for ongoing monitoring in Snyk.
+        // // This is typically done after deployment to some environment (ex staging, test, production, etc).
+        // stage('Snyk Monitor using Snyk CLI') {
+        //     steps {
+        //         // Use your own Snyk Organization with --org=<your-org>
+        //         sh './snyk monitor --org=demo-applications'
+        //     }
+        // }
     }
 }
