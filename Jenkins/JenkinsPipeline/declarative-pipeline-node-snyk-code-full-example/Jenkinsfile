@@ -39,24 +39,6 @@ pipeline {
             }
         }
 
-        // // Not required if just install the Snyk CLI on your Agent
-        // stage('Download Snyk CLI') {
-        //     steps {
-        //         sh '''
-        //             latest_version=$(curl -Is "https://github.com/snyk/snyk/releases/latest" | grep "Location" | sed s#.*tag/##g | tr -d "\r")
-        //             echo "Latest Snyk CLI Version: ${latest_version}"
-
-        //             snyk_cli_dl_linux="https://github.com/snyk/snyk/releases/download/${latest_version}/snyk-linux"
-        //             echo "Download URL: ${snyk_cli_dl_linux}"
-
-        //             curl -Lo ./snyk "${snyk_cli_dl_linux}"
-        //             chmod +x snyk
-        //             ls -la
-        //             ./snyk -v
-        //         '''
-        //     }
-        // }
-
         stage('Install Snyk CLI') {
             steps {
                 sh 'npm install -g snyk'
@@ -69,27 +51,13 @@ pipeline {
             }
         }        
 
-        // stage('Build') {
-        //     steps {
-        //       sh 'npm install'
-        //     }
-        // }
-
         // Run snyk test to check for vulnerabilities and fail the build if any are found
         // Consider using --severity-threshold=<low|medium|high> for more granularity (see snyk help for more info).
         stage('Snyk Test using Snyk CLI') {
             steps {
-                sh 'snyk code test'
+                sh 'snyk code test -severity-threshold=high'
             }
         }
 
-        // // Capture the dependency tree for ongoing monitoring in Snyk.
-        // // This is typically done after deployment to some environment (ex staging, test, production, etc).
-        // stage('Snyk Monitor using Snyk CLI') {
-        //     steps {
-        //         // Use your own Snyk Organization with --org=<your-org>
-        //         sh './snyk monitor --org=demo-applications'
-        //     }
-        // }
     }
 }
