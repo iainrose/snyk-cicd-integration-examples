@@ -35,7 +35,7 @@ pipeline {
 
         stage('Test Build Requirements') {
             steps {
-                sh 'node -version'
+                sh 'node --version'
             }
         }
 
@@ -57,17 +57,23 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Test Snyk CLI') {
             steps {
-              sh 'npm install'
+                sh 'snyk --version'
             }
-        }
+        }        
+
+        // stage('Build') {
+        //     steps {
+        //       sh 'npm install'
+        //     }
+        // }
 
         // Run snyk test to check for vulnerabilities and fail the build if any are found
         // Consider using --severity-threshold=<low|medium|high> for more granularity (see snyk help for more info).
         stage('Snyk Test using Snyk CLI') {
             steps {
-                sh './snyk test'
+                sh './snyk code test'
             }
         }
 
