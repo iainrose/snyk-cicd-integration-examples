@@ -3,7 +3,7 @@ pipeline {
 
     // Install the Jenkins tools you need for your project / environment
     tools {
-        nodejs 'node' // Refers to a global tool configuration for NodeJS called 'node'
+        nodejs 'Node' // Refers to a global tool configuration for NodeJS called 'node'
     }
 
     // Pull your Snyk token from a Jenkins encrypted credential
