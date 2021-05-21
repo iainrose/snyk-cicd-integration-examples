@@ -32,7 +32,7 @@ pipeline {
         
         stage('Run Snyk Scan') {
             steps {
-                snykSecurity monitorProjectOnBuild: false, additionalArguments: 'iaintest --docker --file=Dockerfile', snykInstallation: 'Snyk', snykTokenId: 'snyk_api_token'
+                snykSecurity monitorProjectOnBuild: false, additionalArguments: 'docker-goof --docker --file=Dockerfile', snykInstallation: 'Snyk', snykTokenId: 'snyk_api_token'
             }
         }
     }
