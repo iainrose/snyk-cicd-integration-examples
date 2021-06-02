@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    // Install the Jenkins tools you need for your project / environment
+    tools {
+        snyk 'Snyk' // Refers to a global tool configuration for Snyk called 'Snyk'
+    }
+
+    environment {
+//        SNYK_TOKEN = credentials('SNYK_TOKEN')
+        PATH="/usr/local/bin:${PATH}" // Not needed for all envs, this is just so my Jenkins can find Docker
+    }
+
+    stages {
+        
+        stage('Get Dockerfile') {
+            steps {
+                git url: 'https://github.com/iainrose/docker-goof'
+            }
+        }
+        
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build ("docker-goof:test")                
+                }
+            }
+        }
+        
+        stage('Run Snyk Scan') {
+            steps {
+                snykSecurity monitorProjectOnBuild: false, additionalArguments: 'docker-goof:test --docker --file=Dockerfile', snykInstallation: 'Snyk', snykTokenId: 'snyk_api_token'
+            }
+        }
+    }
+}
