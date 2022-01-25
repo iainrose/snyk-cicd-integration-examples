@@ -41,9 +41,9 @@ pipeline {
             }
         }      
 
-        // Run snyk test to check for vulnerabilities and fail the build if any are found
+        // Run snyk code test to check for vulnerabilities and fail the build if any are found
         // Consider using --severity-threshold=<low|medium|high> for more granularity (see snyk help for more info).
-        stage('Snyk Test using Snyk CLI') {
+        stage('Snyk Code Test using Snyk CLI') {
             steps {
                 sh './snyk code test'
             }
