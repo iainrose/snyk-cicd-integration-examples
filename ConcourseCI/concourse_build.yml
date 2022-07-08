@@ -3,7 +3,7 @@ resources:
     type: git
     icon: github-circle
     source:
-      uri: https://github.com/Snyk/snyk-demo-todo.git
+      uri: https://github.com/snyk-labs/nodejs-goof
 
 jobs:
   - name: test
@@ -16,9 +16,9 @@ jobs:
           platform: linux
           image_resource:
             type: registry-image
-            source: { repository: node, tag: "8" }
+            source: { repository: snyk/snyk-cli, tag: npm }
           params:
-            SNYK_TOKEN: ((snyk-token)
+            SNYK_TOKEN: ((snyk-token))
           inputs:
             - name: goof
           run:
@@ -26,9 +26,5 @@ jobs:
             args:
               - -c
               - |
-                echo "Node Version: $(node --version)"
-                echo "NPM Version: $(npm --version)"
                 cd goof
-                npm install
-                npm install -g snyk
                 snyk test
