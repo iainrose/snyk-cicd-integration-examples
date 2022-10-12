@@ -16,7 +16,7 @@ pipeline {
         
         stage('Run Snyk Scan') {
             steps {
-                snykSecurity monitorProjectOnBuild: false, additionalArguments: '--iac, snykInstallation: 'Snyk', snykTokenId: 'snyk_api_token'
+                snykSecurity monitorProjectOnBuild: false, additionalArguments: '--iac', snykInstallation: 'Snyk', snykTokenId: 'snyk_api_token'
             }
         }
     }
