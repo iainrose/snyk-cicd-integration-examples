@@ -16,7 +16,7 @@ pipeline {
         
         stage('Run Snyk Scan') {
             steps {
-                snykSecurity monitorProjectOnBuild: false, additionalArguments: '--all-projects --severity-threshold=high --fail-on=upgradable', snykInstallation: 'Snyk', snykTokenId: 'snyk_api_token'
+                snykSecurity monitorProjectOnBuild: false, severity: 'high', additionalArguments: '--all-projects --fail-on=upgradable', snykInstallation: 'Snyk', snykTokenId: 'snyk_api_token'
             }
         }
     }
