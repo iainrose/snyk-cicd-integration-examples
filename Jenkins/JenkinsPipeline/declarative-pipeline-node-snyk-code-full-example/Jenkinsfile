@@ -16,7 +16,7 @@ pipeline {
         
         stage('Run Snyk Scan') {
             steps {
-                snykSecurity additionalArguments: '--code --priority-threshold=high', monitorProjectOnBuild: false, snykInstallation: 'Snyk', snykTokenId: 'snyk_api_token'
+                snykSecurity additionalArguments: '--code --severity-threshold=high', monitorProjectOnBuild: false, snykInstallation: 'Snyk', snykTokenId: 'snyk_api_token'
             }
         }
     }
